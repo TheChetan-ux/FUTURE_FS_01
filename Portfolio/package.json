@@ -1,0 +1,9 @@
+{
+  "name": "chetan-portfolio-vercel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vercel-ready full stack portfolio for Chetan Bagaria",
+  "dependencies": {
+    "mongoose": "^8.23.0"
+  }
+}

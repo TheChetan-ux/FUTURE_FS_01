@@ -36,12 +36,12 @@ const projects = [
   }
 ];
 
-// Use the same origin when served by Express, otherwise fall back to the local backend.
-const API_BASE_URL =
-  window.location.origin.includes("localhost:5000") ||
-  window.location.origin.includes("127.0.0.1:5000")
-    ? ""
-    : "http://localhost:5000";
+// Use same-origin in production/Vercel, but keep localhost fallback for local frontend previews.
+const isLocalPreview =
+  ["localhost", "127.0.0.1"].includes(window.location.hostname) &&
+  !window.location.origin.includes(":5000");
+
+const API_BASE_URL = isLocalPreview ? "http://localhost:5000" : "";
 
 const navToggle = document.querySelector(".nav-toggle");
 const navLinks = document.querySelector(".nav-links");
