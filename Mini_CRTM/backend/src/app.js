@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 
 import authRoutes from './routes/authRoutes.js';
 import customerRoutes from './routes/customerRoutes.js';
+import connectDB from './config/db.js';
 import taskRoutes from './routes/taskRoutes.js';
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 
@@ -25,6 +26,15 @@ app.use(
   })
 );
 app.use(express.json());
+
+app.use(async (_req, _res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get('/api/health', (_req, res) => {
   res.json({ success: true, message: 'Mini CRM API is running' });

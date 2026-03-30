@@ -158,3 +158,34 @@ That single link will load the React app, and the API will also be available und
 - Passwords are hashed with bcrypt before saving.
 - JWT protects customer and task routes.
 - Every user only accesses their own customers and tasks.
+
+## Deploy On Vercel
+
+Deploy this project as two Vercel projects from the same GitHub repo.
+
+### Frontend project
+
+- Root Directory: `Mini_CRTM/frontend`
+- Framework Preset: `Vite`
+- Build Command: `npm run build`
+- Output Directory: `dist`
+- Environment Variable:
+  - `VITE_API_URL=https://your-backend-project.vercel.app/api`
+
+### Backend project
+
+- Root Directory: `Mini_CRTM/backend`
+- Framework Preset: `Other`
+- Install Command: `npm install`
+- Build Command: leave empty
+- Output: handled by `vercel.json`
+- Environment Variables:
+  - `MONGODB_URI=your_mongodb_atlas_connection_string`
+  - `JWT_SECRET=your_secure_secret`
+  - `CLIENT_URL=https://your-frontend-project.vercel.app`
+
+### Important
+
+- Use MongoDB Atlas, not a local MongoDB instance, for production.
+- The backend is configured for Vercel serverless execution and reuses MongoDB connections when possible.
+- After deploying the backend, copy its public URL into the frontend `VITE_API_URL` variable and redeploy the frontend.
