@@ -1,3 +1,6 @@
 node_modules/
 .env
 Portfolio/backend/.env
+Mini_CRTM/backend/.env
+Mini_CRTM/frontend/.env
+Mini_CRTM/frontend/dist/
