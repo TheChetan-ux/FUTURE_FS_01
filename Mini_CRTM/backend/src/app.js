@@ -55,15 +55,20 @@ app.use('/api', (req, res, next) => {
     return;
   }
 
-  if (!isDatabaseReady()) {
-    res.status(503).json({
-      success: false,
-      message: 'Database is not connected. Check MONGODB_URI and MongoDB Atlas network access.',
-    });
+  if (isDatabaseReady()) {
+    next();
     return;
   }
 
-  next();
+  connectDB()
+    .then(() => next())
+    .catch(() => {
+      res.status(503).json({
+        success: false,
+        message: 'Database is not connected. Check MONGODB_URI and MongoDB Atlas network access.',
+        error: getLastDatabaseError(),
+      });
+    });
 });
 
 app.use('/api/auth', authRoutes);
