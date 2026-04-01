@@ -7,8 +7,8 @@ import { fileURLToPath } from 'url';
 
 import authRoutes from './routes/authRoutes.js';
 import customerRoutes from './routes/customerRoutes.js';
-import connectDB from './config/db.js';
 import taskRoutes from './routes/taskRoutes.js';
+import connectDB, { getLastDatabaseError, isDatabaseReady } from './config/db.js';
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 
 dotenv.config();
@@ -27,17 +27,43 @@ app.use(
 );
 app.use(express.json());
 
-app.use(async (_req, _res, next) => {
-  try {
-    await connectDB();
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
-
 app.get('/api/health', (_req, res) => {
   res.json({ success: true, message: 'Mini CRM API is running' });
+});
+
+app.get('/api/db-health', async (_req, res) => {
+  if (!isDatabaseReady()) {
+    try {
+      await connectDB();
+    } catch (_error) {
+      // The latest DB error is exposed in the response below.
+    }
+  }
+
+  const databaseReady = isDatabaseReady();
+
+  res.status(databaseReady ? 200 : 503).json({
+    success: databaseReady,
+    databaseReady,
+    error: databaseReady ? null : getLastDatabaseError(),
+  });
+});
+
+app.use('/api', (req, res, next) => {
+  if (req.path === '/health' || req.path === '/db-health') {
+    next();
+    return;
+  }
+
+  if (!isDatabaseReady()) {
+    res.status(503).json({
+      success: false,
+      message: 'Database is not connected. Check MONGODB_URI and MongoDB Atlas network access.',
+    });
+    return;
+  }
+
+  next();
 });
 
 app.use('/api/auth', authRoutes);
