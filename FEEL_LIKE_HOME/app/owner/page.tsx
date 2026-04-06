@@ -4,12 +4,12 @@ import { ownerChecklist } from "@/lib/mock-data";
 const onboardingFlows = [
   {
     title: "Property owner",
-    fee: "Registration fee: Rs. 500",
+    fee: "Owner onboarding charges are on manual hold for MVP",
     steps: ["KYC and PAN", "Upload ownership or lease proof", "Set daily/monthly pricing"]
   },
   {
     title: "Vehicle owner",
-    fee: "Registration fee: Rs. 200",
+    fee: "Vehicle onboarding charges are on manual hold for MVP",
     steps: ["DL and RC upload", "Insurance and fitness proof", "Enable 6-hour time blocks"]
   }
 ];

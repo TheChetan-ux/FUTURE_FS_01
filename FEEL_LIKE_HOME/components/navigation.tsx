@@ -5,7 +5,8 @@ const links = [
   { href: "/discover", label: "Discover" },
   { href: "/owner", label: "Owner" },
   { href: "/admin", label: "Admin" },
-  { href: "/membership", label: "Membership" }
+  { href: "/membership", label: "Membership" },
+  { href: "/login", label: "Login" }
 ];
 
 export function Navigation() {

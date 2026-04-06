@@ -129,7 +129,7 @@ export default function HomePage() {
         <SectionCard
           icon={<IndianRupee className="h-5 w-5" />}
           title="Smart pricing"
-          description="Apply weekend and weekday rates while keeping fees aligned to asset value."
+          description="Apply weekend and weekday rates while keeping billing and collections manual for now."
         />
       </section>
 
